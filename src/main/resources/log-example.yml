@@ -1,0 +1,52 @@
+spring:
+  redis:
+    host: redis
+    port: 6379
+    password: 123456
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: admin
+    password: 123456
+    publisher-returns: true
+    publisher-confirm-type: correlated
+    listener:
+      type: simple
+      simple:
+        acknowledge-mode: manual
+  kafka:
+    bootstrapServers: kafka:9092
+    producer:
+      acks: 1
+      retries: 0
+      client-id: ${spring.application.name}
+    consumer:
+      groupId: test
+      client-id: ${spring.application.name}
+      fetchMaxWait: 6000
+      enableAutoCommit: false
+      autoOffsetReset: latest
+    listener:
+      ack-mode: manual
+      pollTimeout: 1500
+      missing-topics-fatal: false
+hsy:
+  log:
+    type: redis
+    console: true
+    redis:
+      key: log-test
+      max-count: 2
+#    type: rabbit
+#    rabbit:
+#      exchange: exchange.log
+#      queue: queue.log
+#      routing-key: routing.log
+#      headers:
+#        log: log-test
+#    type: kafka
+#    kafka:
+#      topic: log
+#      key: log
+#      headers:
+#        log: log-test
